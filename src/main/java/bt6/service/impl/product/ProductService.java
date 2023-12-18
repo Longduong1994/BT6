@@ -10,6 +10,7 @@ import bt6.service.mapper.ProductMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,10 +25,20 @@ public class ProductService implements IProductService{
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
     @Override
-    public Page<ProductResponseDto> findAll(String name, int page, int size) {
-        Page<Product> products =productRepository.findAllByProductNameContaining(name, PageRequest.of(page, size));
+    public Page<ProductResponseDto> findAll(String name, int page, int size, String field, String by, Double minPrice, Double maxPrice) {
+        Sort sort = Sort.by(field);
+
+        if (by.equalsIgnoreCase("desc")) {
+            sort = sort.descending();
+        } else {
+            sort = sort.ascending();
+        }
+
+        Page<Product>  products = productRepository.findAllByProductNameContainingAndPriceBetween(name,minPrice,maxPrice, PageRequest.of(page, size).withSort(sort));;
         return products.map(productMapper::toResponse);
     }
+
+
 
     @Override
     public ProductResponseDto findById(Long id) throws NotFoundException {

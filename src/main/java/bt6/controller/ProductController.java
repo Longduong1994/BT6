@@ -20,8 +20,12 @@ public class ProductController {
     @GetMapping()
     public ResponseEntity<?> findAll(@RequestParam(defaultValue = "") String name,
                                      @RequestParam(defaultValue = "0" ) int page,
-                                     @RequestParam(defaultValue = "5") int size){
-        return new ResponseEntity<>(productService.findAll(name, page, size), HttpStatus.OK);
+                                     @RequestParam(defaultValue = "5") int size,
+                                     @RequestParam(defaultValue = "id") String field,
+                                     @RequestParam(defaultValue = "asc") String by,
+                                     @RequestParam(defaultValue = "0") Double minPrice,
+                                     @RequestParam(defaultValue = "" + Double.MAX_VALUE) Double maxPrice){
+        return new ResponseEntity<>(productService.findAll(name, page, size,field,by,minPrice,maxPrice), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

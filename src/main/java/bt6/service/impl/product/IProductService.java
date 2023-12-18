@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 public interface IProductService {
 
-    Page<ProductResponseDto> findAll(String name, int page, int size);
+    Page<ProductResponseDto> findAll(String name, int page, int size,String field,String by, Double minPrice, Double maxPrice);
 
     ProductResponseDto findById(Long id) throws NotFoundException;
 
