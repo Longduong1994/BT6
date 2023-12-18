@@ -2,6 +2,7 @@ package bt6.service.impl.cart;
 
 import bt6.dto.CartItemRequestDto;
 import bt6.dto.CartItemResponse;
+import bt6.dto.OrderDetail;
 import bt6.entity.CartItem;
 import bt6.entity.Order;
 import bt6.entity.Product;
@@ -34,6 +35,13 @@ public class CartItemService implements ICartItemService {
     public List<CartItemResponse> findByOrder(Long id) throws NotFoundException {
         Order order = orderService.findById(id);
         return cartItemRepository.findAllByOrder(order).stream().map(cartItemMapper::toResponse).collect(Collectors.toList());
+    }
+
+    @Override
+    public OrderDetail findOrderDetail(Long id) throws NotFoundException {
+        Order order = orderService.findById(id);
+        List<CartItemResponse> cartItems = findByOrder(id);
+        return cartItemMapper.toDetail( cartItems,order);
     }
 
     @Override

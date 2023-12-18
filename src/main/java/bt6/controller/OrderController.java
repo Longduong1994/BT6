@@ -1,9 +1,6 @@
 package bt6.controller;
 
-import bt6.dto.CartItemRequestDto;
-import bt6.dto.CartItemResponse;
-import bt6.dto.OrderRequestDto;
-import bt6.dto.OrderResponse;
+import bt6.dto.*;
 import bt6.entity.CartItem;
 import bt6.exception.NotFoundException;
 import bt6.service.impl.cart.ICartItemService;
@@ -47,8 +44,8 @@ public class OrderController {
     }
 
     @GetMapping("/detail/{id}")
-    public ResponseEntity<List<CartItemResponse>> getDetail(@PathVariable Long id) throws NotFoundException {
-        return new ResponseEntity<>(cartItemService.findByOrder(id), HttpStatus.OK);
+    public ResponseEntity<OrderDetail> getDetail(@PathVariable Long id) throws NotFoundException {
+        return new ResponseEntity<>(cartItemService.findOrderDetail(id), HttpStatus.OK);
     }
 
 

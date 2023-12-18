@@ -2,6 +2,7 @@ package bt6.service.impl.cart;
 
 import bt6.dto.CartItemRequestDto;
 import bt6.dto.CartItemResponse;
+import bt6.dto.OrderDetail;
 import bt6.exception.NotFoundException;
 import org.springframework.data.domain.Page;
 
@@ -11,6 +12,8 @@ public interface ICartItemService {
     Page<CartItemResponse> findAll(int page, int size);
 
     List<CartItemResponse> findByOrder(Long id) throws NotFoundException;
+
+    OrderDetail findOrderDetail(Long id) throws NotFoundException;
 
     CartItemResponse findById(Long id) throws NotFoundException;
 
